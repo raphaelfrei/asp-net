@@ -20,12 +20,25 @@ In this example, will be two tables for a hamburger online order:
 
 1. Hamburger.cs
 ````csharp
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Restaurante.Models {
 
+    [Table("Hamburgers")]
     public class Hamburger {
 
+        [Key]
         public int HamburgerID { get; set; }
+
+        [Required(ErrorMessage = "The name must be informed")]
+        [Display(Name = "Hamburguer Name")]
         public string HamburgerName { get; set; }
+
+        [Required(ErrorMessage = "The short description must be informed")]
+        [Display(Name = "Short Description")]
+        [MinLength(20, ErrorMessage = "Short Description must have at least {1} characters")] 
+        [MaxLength(100, ErrorMessage = "Short Description must not exceed {1} characters")]
         public string ShortDescription { get; set; }
         public string LongDescription { get; set; }
         public decimal Price { get; set; }
@@ -34,6 +47,7 @@ namespace Restaurante.Models {
         public bool IsFavorite { get; set; }
         public bool HasInStock { get; set; }
 
+        /* 1 to N relation */
         public int CategoryID { get; set; }
         public virtual Category Category { get; set; }
 
@@ -43,12 +57,25 @@ namespace Restaurante.Models {
 
 2. Category.cs:
 ````csharp
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Restaurante.Models {
 
+    [Table("Categories")]
     public class Category {
 
+        [Key]
         public int CategoryID { get; set; }
+
+        [Required(ErrorMessage = "The name must be informed")]
+        [Display(Name = "Category Name")]
         public string CategoryName { get; set; }
+
+        [Required(ErrorMessage = "The description must be informed")]
+        [Display(Name = "Description")]
+        [MinLength(20, ErrorMessage = "Description must have at least {1} characters")]
+        [MaxLength(100, ErrorMessage = "Description must not exceed {1} characters")]
         public string CategoryDescription { get; set; }
 
         public List<Hamburger> Hamburgers { get; set; }
