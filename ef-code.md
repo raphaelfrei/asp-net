@@ -7,11 +7,9 @@ Integrate EF Code on ASP.NET project for Code-First applications.
 ### 1. Necessary packages:
 *(Available on Nuget Packages)*
 
-````
-1. Microsoft.EntityFrameworkCore.Design
-2. Microsoft.EntityFrameworkCore.Tools
-3. Microsoft.EntityFrameworkCore.DATABASE
-````
+> 1. Microsoft.EntityFrameworkCore.Design
+> 2. Microsoft.EntityFrameworkCore.Tools
+> 3. Microsoft.EntityFrameworkCore.DATABASE
 
 ### 2. Create C# Models:
 *(I'm usually creating inside MODELS folder)*
@@ -31,21 +29,58 @@ namespace Restaurante.Models {
         [Key]
         public int HamburgerID { get; set; }
 
-        [Required(ErrorMessage = "The name must be informed")]
+        /* ----- */
+
         [Display(Name = "Hamburguer Name")]
+        [Required(ErrorMessage = "The name must be informed")]
+        [StringLength(50, MinimumLength = 10, ErrorMessage = "The name must have at least {2} characters and not exceed {1} caracters")]
         public string HamburgerName { get; set; }
 
-        [Required(ErrorMessage = "The short description must be informed")]
+        /* ----- */
+
         [Display(Name = "Short Description")]
-        [MinLength(20, ErrorMessage = "Short Description must have at least {1} characters")] 
-        [MaxLength(100, ErrorMessage = "Short Description must not exceed {1} characters")]
+        [Required(ErrorMessage = "The short description must be informed")]
+        [StringLength(100, ErrorMessage = "The short description must not exceed {1} characters")]
         public string ShortDescription { get; set; }
+
+        /* ----- */
+
+        [Display(Name = "Long Description")]
+        [Required(ErrorMessage = "The long description must be informed")]
+        [StringLength(100, ErrorMessage = "The long description must not exceed {1} characters")]
         public string LongDescription { get; set; }
+
+        /* ----- */
+
+        [Display(Name = "Hamburger Price")]
+        [Required(ErrorMessage = "The hamburger price must be informed")]
+        [Column(TypeName = "decimal(10,2)")]
+        [Range(1, 999.99, ErrorMessage = "The price must be between ${1} and ${2}")]
         public decimal Price { get; set; }
+
+        /* ----- */
+
+        [Display(Name = "Image URL Path")]
+        [StringLength(200, ErrorMessage = "The image URL path must not exceed {1} characters")]
         public string ImageURL { get; set; }
+
+        /* ----- */
+
+        [Display(Name = "Thumb Image URL Path")]
+        [StringLength(200, ErrorMessage = "The thumb image URL path must not exceed {1} characters")]
         public string ImageThumbURL { get; set; }
+
+        /* ----- */
+
+        [Display(Name = "Is Prefered?")]
         public bool IsFavorite { get; set; }
+
+        /* ----- */
+
+        [Display(Name = "Has in Stock?")]
         public bool HasInStock { get; set; }
+
+        /* ----- */
 
         /* 1 to N relation */
         public int CategoryID { get; set; }
@@ -68,15 +103,21 @@ namespace Restaurante.Models {
         [Key]
         public int CategoryID { get; set; }
 
-        [Required(ErrorMessage = "The name must be informed")]
+        /* ----- */
+
         [Display(Name = "Category Name")]
+        [Required(ErrorMessage = "The name must be informed")]
+        [StringLength(100, ErrorMessage = "The name must not exceed {1} characters")]
         public string CategoryName { get; set; }
 
-        [Required(ErrorMessage = "The description must be informed")]
+        /* ----- */
+
         [Display(Name = "Description")]
-        [MinLength(20, ErrorMessage = "Description must have at least {1} characters")]
-        [MaxLength(100, ErrorMessage = "Description must not exceed {1} characters")]
+        [Required(ErrorMessage = "The description must be informed")]
+        [StringLength(100, ErrorMessage = "Description must not exceed {1} characters")]
         public string CategoryDescription { get; set; }
+
+        /* ----- */
 
         public List<Hamburger> Hamburgers { get; set; }
 
@@ -110,6 +151,7 @@ namespace Restaurante.Context {
 ### 4. Connection Strings:
 *Inside appsettings.json*
 
+**Don't forget to change the *{host}* property**
 ````json
 {
 
@@ -143,3 +185,30 @@ var app = builder.Build();
 
 app.Run();
 ````
+
+### 6. Do Implementations:
+
+I'll be doing by using *Package Manager Console*, but you can use *NET CLI* as well.
+
+The comands are:
+
+1. Create Migration:
+
+> add-migration NAME [options]
+
+2. Apply Migration:
+
+> update-database [options]
+
+3. Remove Migration:
+
+> remove-migration
+
+So, for the first database commit:
+
+> add-migration InitialCommit<br>
+> update-database
+
+You can see what changes this will cause inside the *Migrations* folder
+
+This, will create the Database based on the [ConnectionString](https://github.com/raphaelfrei/asp-net/blob/main/ef-code.md#4-connection-strings).
