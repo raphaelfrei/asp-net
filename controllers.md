@@ -64,3 +64,5 @@ Settings for this page:
 > Db Context class: The Db Context you created<br>
 
 Now, create the page.
+
+After creating the view, this will create the *[ViewName].cshtml* file inside /Views/[Controller]/ folder.
