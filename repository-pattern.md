@@ -71,6 +71,21 @@ namespace Restaurante.Repositories {
 }
 ````
 
+### 5. Add Dependency Injection:
+
+Add DI to *Program.cs* for each Interface that you have:
+
+````csharp
+// ...
+
+// Add services to the container.
+// ...
+builder.Services.AddTransient<IHamburgerRepository, HamburgerRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+
+// ...
+````
+
 ## Additional:
 
 ### Using search criteria on DB:
