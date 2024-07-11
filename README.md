@@ -17,3 +17,4 @@ I'm learning about ASP.NET to understand more about web development without bein
 - [Entity Framework Core](https://github.com/raphaelfrei/asp-net/blob/main/ef-code.md)
 - [Repository Pattern](https://github.com/raphaelfrei/asp-net/blob/main/repository-pattern.md)
 - [Controllers](https://github.com/raphaelfrei/asp-net/blob/main/controllers.md)
+- [List View Model](https://github.com/raphaelfrei/asp-net/blob/main/list-view-model.md)
