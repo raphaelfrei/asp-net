@@ -209,6 +209,19 @@ So, for the first database commit:
 > add-migration InitialCommit<br>
 > update-database
 
+````
+For NET CLI:
+
+Add Migration:
+    dotnet ef migrations add NAME
+
+Update on DB:
+    dotnet ef database update
+
+Remove last Migration:
+    dotnet ef migrations remove
+````
+
 You can see what changes this will cause inside the *Migrations* folder
 
 This, will create the Database based on the [ConnectionString](https://github.com/raphaelfrei/asp-net/blob/main/ef-code.md#4-connection-strings).
